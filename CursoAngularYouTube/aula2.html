@@ -1,0 +1,30 @@
+<!--
+    Programador : Lucas Guilherme
+    Data        : 19/01/2022
+    Descricao   : Exercicio basico
+
+-->
+<!--
+    Programador : Lucas Guilherme Lias
+    Data        : 18/02/2022
+    Descricao   : Aula 2 do curso de Angula Js, usando ng-bind e ng-repeat
+--> 
+<html ng-app="aula"> <!--tudo do modulo estará sendo processado-->
+<head>
+    <title> Angular Js</title>
+    <script src="lib/angular.min.js"></script>
+</head>
+
+<script>
+    angular.module("aula",[]) 
+    .controller ("ControllerUm", function($scope){ 
+        $scope.texto = "Hello Word";
+    })
+</script>
+
+<body ng-controller="ControllerUm">
+
+    {{texto}}
+
+</body>
+</html>

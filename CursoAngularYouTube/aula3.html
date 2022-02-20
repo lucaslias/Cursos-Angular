@@ -1,0 +1,33 @@
+<!--
+    Programador : Lucas Guilherme
+    Data        : 19/01/2022
+    Descricao   : O que é scopoe, o que é objeto, como angular funciona
+-->
+<html ng-app="aula">
+<head>
+    <title> Angular Js </title>
+    <script src="lib/angular.min.js"></script>
+</head>
+
+    <script>
+        angular.module("aula",[]) 
+        .controller ("ControllerUm", function($scope){ 
+            $scope.nome = "Lucas";
+            $scope.ativo = true;
+        })
+    </script>
+
+<body ng-controller="ControllerUm">
+
+    nome ->> {{nome}}
+    <br>
+    <input type="text" ng-model="nome">
+
+    <br><br><br>
+
+    Valor booleano ->> {{ativo}}
+    <br>
+    <input type="checkbox" ng-model="ativo">
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!--
+    Programador : Lucas Guilherme Lias
+    Data        : 18/02/2022
+    Descricao   : Aula 7 do curso de Angula Js, editando registro
+--> 
+
+
+<html ng-app="meuModulo"> <!--tudo do modulo estará sendo processado-->
+<head>
+    <title> Angular Js</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+
+    <script src="lib/angular/angular.min.js"></script>
+</head>
+
+<script>
+    angular.module("meuModulo",[]) //dentro do [] pode adicionar outros modulos
+    .controller ("indexController", function($scope){ //scope é o garçon que leva as infos ao html
+        $scope.titulo = "Sistema com Angular JS";
+        $scope.alunos = [
+            {nome: "Lucas", email:"lucas@gmail.com", nota1:10, nota2: 8, nota3:9},
+            {nome: "Joao", email:"joao@gmail.com", nota1: 9, nota2: 7, nota3:4},
+            {nome: "Maria", email:"maria@gmail.com", nota1: 8, nota2: 5, nota3:2},
+        ]
+        var init = function(){
+            $scope.alunos.forEach(function(aluno){
+                aluno.media = media(aluno); 
+            });
+            limpaForm();
+            $scope.editandoAluno = false;
+        };
+
+        var media = function(aluno){
+            var media = ( parseFloat(aluno.nota1)+parseFloat(aluno.nota2)+ parseFloat(aluno.nota3))/3;
+            return media.toFixed(2);
+        }
+
+        $scope.addAluno = function(newAluno){
+            if($scope.newAluno.nome != "") {
+
+                newAluno.media = media(newAluno);
+                $scope.alunos.push($scope.newAluno);
+            
+                $scope.newAluno = {nome:"", email:"", nota1:'', nota2:'', nota3:'', media:''};
+
+                var elems = document.querySelectorAll('.modal');
+                var instances = M.Modal.init(elems, { dismissible: false });
+            };
+        }
+
+        var limpaForm = function(){
+            $scope.newAluno = {nome:"", email:"", nota1:'', nota2:'', nota3:'', media:''};
+        };
+
+        $scope.editandoAluno = false;
+
+
+        var alunoEditar;
+        $scope.editarAlunoFn = function(Aluno){
+            $scope.editandoAluno = true;
+            angular.copy(Aluno,  $scope.newAluno)
+            alunoEditar = Aluno;
+        };
+
+       
+        $scope.salvarAluno = function(Aluno){
+            alunoEditar.nome = Aluno.nome;
+            alunoEditar.email = Aluno.email;
+            alunoEditar.nota1 = Aluno.nota1;
+            alunoEditar.nota2 = Aluno.nota2;
+            alunoEditar.nota3 = Aluno.nota3;
+            alunoEditar.media = media(Aluno);
+        };
+
+
+        init();
+    })
+
+</script>
+
+<body ng-controller="indexController" class="container">
+
+
+    <h2>{{titulo}} </h2> 
+
+    <!--<div ng-bind="titulo"> </div>  também escreve na tela, só mostra após carregado--> 
+
+    <br> <br>
+
+    <div class="row"> 
+        <input type="text" placeholder="busca" ng-model="busca.nome"> <!--variavel busca será incrementada ao digitar algo no campo-->    
+    </div>
+
+    <table class="striped">
+        <thead>
+            <tr>
+                <th> Nome </th>
+                <th> Email </th>
+                <th> Nota 1 </th>
+                <th> Nota 2 </th>
+                <th> Nota 3 </th>
+                <th> Média </th>
+                <th> Ação </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="aluno in alunos | filter:busca"> <!--Para fazer o laço (tipo for each)-->
+                <td> {{aluno.nome}}</td>                    <!-- filter para realizar um filtro-->
+                <td> {{aluno.email}}</td>
+                <td> {{aluno.nota1}}</td>
+                <td> {{aluno.nota2}}</td>
+                <td> {{aluno.nota3}}</td>
+                <td> {{aluno.media}}</td>
+                <td> <button ng-click="editarAlunoFn(aluno)"> editar </button></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- removi do modal pq o materialize não estava funcionando -->
+        <div class="modal-content">
+            <h4 ng-if="!editandoAluno">Adicionar aluno</h4>
+            <h4 ng-if="editandoAluno"> Editar aluno</h4>
+        </div>
+        <div class="row">
+            <div class="input-field col m6 s12">
+                <input type="text" ng-model="newAluno.nome" class="validate" placeholder="nome">
+            </div>
+
+            <div class="input-field col m6 s12">
+                <input type="text" ng-model="newAluno.email" class="validate" placeholder="email">
+            </div>
+
+            <div class="input-field col m4 s12">
+                <input type="text" ng-model="newAluno.nota1" class="validate" placeholder="nota"> 
+            </div>
+        
+            <div class="input-field col m4 s12">
+                <input type="text" ng-model="newAluno.nota2" lass="validate" placeholder="nota">
+            </div>
+  
+            <div class="input-field col m4 s12">
+                <input type="text" ng-model="newAluno.nota3" class="validate" placeholder="nota">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a ng-if="!editandoAluno"ng-click="addAluno(newAluno)" class="waves-effect waves-light btn blue">adicionar</a>
+            <a ng-if="editandoAluno" ng-click="salvarAluno(newAluno)" class="waves-effect waves-light btn blue">salvar</a>
+        </div>
+          
+
+</body>
+</html>

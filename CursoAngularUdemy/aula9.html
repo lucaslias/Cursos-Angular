@@ -1,0 +1,100 @@
+<!--
+    Programador : Lucas Guilherme Lias
+    Data        : 18/02/2022
+    Descricao   : Aula 9 do curso de Angula Js, refatorar o codigo
+--> 
+
+
+<html ng-app="meuModulo"> <!--tudo do modulo estará sendo processado-->
+<head>
+    <title> Angular Js</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>  
+
+    <script src="lib/angular/angular.min.js"></script>
+</head>
+
+<script src="js/app/app.js"> </script>
+<script src="js/app/controllers.js"> </script>
+
+<body ng-controller="indexController" class="container">
+
+
+    <h2>{{titulo}} </h2> 
+
+    <!--<div ng-bind="titulo"> </div>  também escreve na tela, só mostra após carregado--> 
+
+    <br> <br>
+
+    <div class="row"> 
+        <input type="text" placeholder="busca" ng-model="busca.nome"> <!--variavel busca será incrementada ao digitar algo no campo-->    
+    </div>
+
+    <table class="striped">
+        <thead>
+            <tr>
+                <th> Nome </th>
+                <th> Email </th>
+                <th> Nota 1 </th>
+                <th> Nota 2 </th>
+                <th> Nota 3 </th>
+                <th> Média </th>
+                <th> Ação </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="aluno in alunos | filter:busca"> <!--Para fazer o laço (tipo for each)-->
+                <td> {{aluno.nome}}</td>                    <!-- filter para realizar um filtro-->
+                <td> {{aluno.email}}</td>
+                <td> {{aluno.nota1}}</td>
+                <td> {{aluno.nota2}}</td>
+                <td> {{aluno.nota3}}</td>
+                <td> {{aluno.media}}</td>
+                <td> 
+                    <button ng-click="editarAlunoFn(aluno)"> editar </button>
+                    <button ng-click="deletarAluno(aluno)"> deletar </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- removi do modal pq o materialize não estava funcionando -->
+        <div class="modal-content">
+            <h4 ng-if="!editandoAluno">Adicionar aluno</h4>
+            <h4 ng-if="editandoAluno"> Editar aluno</h4>
+        </div>
+        <div class="row">
+            <div class="input-field col m6 s12">
+                <input type="text" ng-model="newAluno.nome" class="validate" placeholder="nome">
+            </div>
+
+            <div class="input-field col m6 s12">
+                <input type="text" ng-model="newAluno.email" class="validate" placeholder="email">
+            </div>
+
+            <div class="input-field col m4 s12">
+                <input type="text" ng-model="newAluno.nota1" class="validate" placeholder="nota"> 
+            </div>
+        
+            <div class="input-field col m4 s12">
+                <input type="text" ng-model="newAluno.nota2" lass="validate" placeholder="nota">
+            </div>
+  
+            <div class="input-field col m4 s12">
+                <input type="text" ng-model="newAluno.nota3" class="validate" placeholder="nota">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <a ng-if="!editandoAluno"ng-click="addAluno(newAluno)" class="waves-effect waves-light btn blue">adicionar</a>
+            <a ng-if="editandoAluno" ng-click="salvarAluno(newAluno)" class="waves-effect waves-light btn blue">salvar</a>
+        </div>
+          
+
+</body>
+</html>

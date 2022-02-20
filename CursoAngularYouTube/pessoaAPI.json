@@ -1,0 +1,13 @@
+[
+    {
+        "nome": "pessoa 1",
+        "idade" : 22,
+        "pais" : "Brasil"
+    },
+        {
+        "nome": "pessoa 2",
+        "idade" : 23,
+        "pais" : "Brasilandia"
+    }
+
+]

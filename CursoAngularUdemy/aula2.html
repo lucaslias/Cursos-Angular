@@ -1,0 +1,60 @@
+<!--
+    Programador : Lucas Guilherme Lias
+    Data        : 18/02/2022
+    Descricao   : Aula 2 do curso de Angula Js, usando ng-bind e ng-repeat
+--> 
+
+
+<html ng-app="meuModulo"> <!--tudo do modulo estará sendo processado-->
+</head>
+    <title> Angular Js</title>
+
+    <script src="lib/angular/angular.min.js"></script>
+</head>
+
+<script>
+    angular.module("meuModulo",[]) //dentro do [] pode adicionar outros modulos
+    .controller ("indexController", function($scope){ //scope é o garçon que leva as infos ao html
+        $scope.titulo = "Sistema com Angular JS";
+        $scope.alunos = [
+            {nome: "Lucas", email:"lucas@gmail.com", nota1:10, nota2: 8, nota3:9},
+            {nome: "Joao", email:"joao@gmail.com", nota1: 9, nota2: 7, nota3:4},
+            {nome: "Maria", email:"maria@gmail.com", nota1: 8, nota2: 5, nota3:2},
+        ]
+    })
+
+</script>
+
+<body ng-controller="indexController">
+
+
+    <div> {{titulo}} </div>
+
+    <div ng-bind="titulo"> </div> <!-- também escreve na tela, só mostra após carregado--> 
+
+    <br> <br>
+
+    <table>
+        <thead>
+            <tr>
+                <th> Nome </th>
+                <th> Email </th>
+                <th> Nota 1 </th>
+                <th> Nota 2 </th>
+                <th> Nota 3 </th>
+                <th> Média </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="aluno in alunos"> <!--Para fazer o laço (tipo for each)-->
+                <td> {{aluno.nome}}</td>
+                <td> {{aluno.email}}</td>
+                <td> {{aluno.nota1}}</td>
+                <td> {{aluno.nota2}}</td>
+                <td> {{aluno.nota3}}</td>
+                <td> media </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

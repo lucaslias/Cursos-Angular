@@ -1,0 +1,74 @@
+<!--
+    Programador : Lucas Guilherme Lias
+    Data        : 18/02/2022
+    Descricao   : Aula 4 do curso de Angula Js, adicionando filtro
+--> 
+
+
+<html ng-app="meuModulo"> <!--tudo do modulo estará sendo processado-->
+<head>
+    <title> Angular Js</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <script src="lib/angular/angular.min.js"></script>
+</head>
+
+<script>
+    angular.module("meuModulo",[]) //dentro do [] pode adicionar outros modulos
+    .controller ("indexController", function($scope){ //scope é o garçon que leva as infos ao html
+        $scope.titulo = "Sistema com Angular JS";
+        $scope.alunos = [
+            {nome: "Lucas", email:"lucas@gmail.com", nota1:10, nota2: 8, nota3:9},
+            {nome: "Joao", email:"joao@gmail.com", nota1: 9, nota2: 7, nota3:4},
+            {nome: "Maria", email:"maria@gmail.com", nota1: 8, nota2: 5, nota3:2},
+        ]
+
+        $scope.media = function(aluno){
+            var media = (aluno.nota1+aluno.nota2+aluno.nota3)/3;
+            return media.toFixed(2); //2 numeros após a virgula
+        }
+
+    })
+
+</script>
+
+<body ng-controller="indexController" class="container">
+
+
+    <h2>{{titulo}} </h2> 
+
+    <!--<div ng-bind="titulo"> </div>  também escreve na tela, só mostra após carregado--> 
+
+    <br> <br>
+
+    <div class="row"> 
+        <input type="text" placeholder="busca" ng-model="busca.nome"> <!--variavel busca será incrementada ao digitar algo no campo-->    
+    </div>
+
+    <table class="striped">
+        <thead>
+            <tr>
+                <th> Nome </th>
+                <th> Email </th>
+                <th> Nota 1 </th>
+                <th> Nota 2 </th>
+                <th> Nota 3 </th>
+                <th> Média </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="aluno in alunos | filter:busca"> <!--Para fazer o laço (tipo for each)-->
+                <td> {{aluno.nome}}</td>                    <!-- filter para realizar um filtro-->
+                <td> {{aluno.email}}</td>
+                <td> {{aluno.nota1}}</td>
+                <td> {{aluno.nota2}}</td>
+                <td> {{aluno.nota3}}</td>
+                <td> {{media(aluno)}} </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

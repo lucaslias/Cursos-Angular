@@ -1,0 +1,27 @@
+<!--
+    Programador : Lucas Guilherme Lias
+    Data        : 18/02/2022
+    Descricao   : Aula 1 do curso de Angula Js, criando o arquivo e imprimindo na tela
+-->
+
+
+<html ng-app="meuModulo"> <!--tudo do modulo estará sendo processado-->
+</head>
+    <title> Angular Js</title> 
+</head>
+<body ng-controller="indexController">
+    <script src="lib/angular/angular.min.js"></script>
+
+    <div> {{titulo}} </div>
+
+    <script>
+        angular.module("meuModulo",[]) //dentro do [] pode adicionar outros modulos
+        .controller ("indexController", function($scope){ //scope é o garçon que leva as infos ao html
+            $scope.titulo = "Sistema com Angular JS";
+        })
+
+    </script>
+
+
+</body>
+</html>
